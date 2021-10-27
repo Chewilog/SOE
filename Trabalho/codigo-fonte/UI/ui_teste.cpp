@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
 	g_signal_connect(m_cards,"clicked",G_CALLBACK(on_m_cards_clicked),NULL);
 	g_signal_connect(add_btn,"clicked",G_CALLBACK(on_add_btn_clicked),NULL);
 	g_signal_connect(rem_btn,"clicked",G_CALLBACK(on_rem_btn_clicked),NULL);
-	g_signal_connect(exit_btn,"clicked",G_CALLBACK(on_exit_btn_clicked),NULL);
+	g_signal_connect(exit_btn,"clicked", G_CALLBACK(gtk_widget_destroy), window);
 	g_signal_connect(back_btn,"clicked",G_CALLBACK(on_back_btn_clicked),NULL);
 	g_signal_connect(enter_btn,"clicked",G_CALLBACK(on_enter_btn_clicked),NULL);
 	g_signal_connect(back_btn2,"clicked",G_CALLBACK(on_back_btn2_clicked),NULL);
@@ -199,10 +199,7 @@ void on_rem_btn_clicked(GtkButton *b)
 	}
 	
 }
-void on_exit_btn_clicked (GtkButton *b)
-{
-	exit(0);
-}
+
 
 void on_row(GtkButton *b)
 {
@@ -812,9 +809,9 @@ void on_row2(GtkButton *b)
 void on_camera_btn_clicked (GtkButton *b)
 {
 	flag_card = cards();
-	if(flag_card < 0){
-			return;
-			}
+	if(flag_card > 0){
+			
+			
 			
 			char txt[] = ".txt";
 			char card_name[1024];
@@ -849,7 +846,7 @@ void on_camera_btn_clicked (GtkButton *b)
 			
 			system(append_cmd2);
 			update_list();
-	
+		}
 }
 void on_manual_btn_clicked (GtkButton *b)
 {
@@ -871,7 +868,7 @@ int cards() {
     FILE *f1 = fopen("names2.txt", "r");
 		if(f1==NULL)
 		{
-			printf("File error!\n");
+			printf("names2.txt nao existe\n");
 			exit(1);
 		}
 		
@@ -881,6 +878,7 @@ int cards() {
 		{
 			if(fgets(tmp,1024,f1)==NULL)
 			{
+				printf("Carta nao localizada!\n ");
 				break;
 			}
 			tmp[strlen(tmp)-1] = 0;
@@ -933,10 +931,27 @@ char *outText;
   printf("OCR->%s\n", ocrResult);
   // Destroy used object and release memory
   api->End();
+
+  
   delete api;
-  delete [] outText;
+  
+  printf("api delete\n");
+  
+  //delete [] outText;
+  
+  printf("outtext delete\n");
+  
   pixDestroy(&image);
-  nome2=ocrResult;
+  
+  printf("destroy image\n");
+  char lixo[]="A";
+  if(ocrResult==NULL)
+		nome2=lixo;
+  else
+		nome2 = ocrResult;
+  
+  printf("nome2 = ocrResult\n");
+  
   return 0;
 }
 int quadro()
@@ -951,8 +966,8 @@ int quadro()
 	char *outText;
 
 
-	int x=945;
-	int y=1200;
+	int x=983;
+	int y=1230;
 	int u=580;
 	int l=63;
 	//Rect text_rect(x,y,200,20);
