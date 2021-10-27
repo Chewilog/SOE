@@ -935,16 +935,13 @@ char *outText;
   
   delete api;
   
-  printf("api delete\n");
+  
   
   //delete [] outText;
-  
-  printf("outtext delete\n");
-  
+ 
   pixDestroy(&image);
-  
-  printf("destroy image\n");
   char lixo[]="A";
+  
   if(ocrResult==NULL)
 		nome2=lixo;
   else
@@ -966,7 +963,11 @@ int quadro()
 	char *outText;
 
 
-	int x=983;
+	//int x=980;
+	//int y=1230;
+	//int u=580;
+	//int l=63;
+	int x=970;
 	int y=1230;
 	int u=580;
 	int l=63;
@@ -981,10 +982,10 @@ int quadro()
 	
 	cvtColor(frame(cut),grayscale,COLOR_RGB2GRAY);
 	threshold(grayscale ,grayscale ,200 ,255, THRESH_BINARY+THRESH_OTSU );
-	double scale_up_x = 2.2;
-	double scale_up_y = 2.2;
-	Mat scaled_f_up;
-	resize(grayscale, scaled_f_up, Size(), scale_up_x, scale_up_y, INTER_NEAREST);
+	//double scale_up_x = 3;
+	//double scale_up_y = 3;
+	//Mat scaled_f_up;
+	//resize(grayscale, scaled_f_up, Size(), scale_up_x, scale_up_y, INTER_NEAREST);
 	imwrite("sample.png",grayscale);
 
 	
